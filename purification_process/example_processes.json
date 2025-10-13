@@ -1,0 +1,254 @@
+{
+  "protein_a_purification": {
+    "process_name": "Protein A Purification",
+    "creation_date": "2024-10-12T00:00:00",
+    "steps": [
+      {
+        "step_name": "Equilibration",
+        "step_type": "equilibration",
+        "volume": 5000,
+        "flowrate": 1000,
+        "inlet_valve": 1,
+        "outlet_valve": 1,
+        "prime_pump": true,
+        "prime_volume": 500,
+        "wait_until_complete": true,
+        "description": "Equilibrate column with PBS buffer at 1000 µL/min"
+      },
+      {
+        "step_name": "Sample Application",
+        "step_type": "sample_application",
+        "volume": 2000,
+        "flowrate": 500,
+        "inlet_valve": 2,
+        "outlet_valve": 1,
+        "prime_pump": true,
+        "prime_volume": 200,
+        "wait_until_complete": true,
+        "description": "Apply sample containing antibodies at 500 µL/min"
+      },
+      {
+        "step_name": "Wash 1 - PBS",
+        "step_type": "wash",
+        "volume": 3000,
+        "flowrate": 1500,
+        "inlet_valve": 3,
+        "outlet_valve": 1,
+        "prime_pump": false,
+        "prime_volume": null,
+        "wait_until_complete": true,
+        "description": "Wash with PBS to remove unbound proteins"
+      },
+      {
+        "step_name": "Wash 2 - Salt",
+        "step_type": "wash",
+        "volume": 2000,
+        "flowrate": 1000,
+        "inlet_valve": 4,
+        "outlet_valve": 1,
+        "prime_pump": true,
+        "prime_volume": 200,
+        "wait_until_complete": true,
+        "description": "High salt wash to remove non-specifically bound proteins"
+      },
+      {
+        "step_name": "Elution",
+        "step_type": "elution",
+        "volume": 1500,
+        "flowrate": 300,
+        "inlet_valve": 5,
+        "outlet_valve": 2,
+        "prime_pump": true,
+        "prime_volume": 150,
+        "wait_until_complete": true,
+        "description": "Elute purified antibodies with low pH buffer"
+      },
+      {
+        "step_name": "Regeneration",
+        "step_type": "cleaning",
+        "volume": 3000,
+        "flowrate": 1500,
+        "inlet_valve": 6,
+        "outlet_valve": 1,
+        "prime_pump": true,
+        "prime_volume": 300,
+        "wait_until_complete": true,
+        "description": "Regenerate column with NaOH solution"
+      },
+      {
+        "step_name": "Storage Buffer",
+        "step_type": "equilibration",
+        "volume": 2000,
+        "flowrate": 1000,
+        "inlet_valve": 7,
+        "outlet_valve": 1,
+        "prime_pump": false,
+        "prime_volume": null,
+        "wait_until_complete": true,
+        "description": "Condition column with storage buffer"
+      }
+    ]
+  },
+  "size_exclusion_chromatography": {
+    "process_name": "Size Exclusion Chromatography",
+    "creation_date": "2024-10-12T00:00:00",
+    "steps": [
+      {
+        "step_name": "Column Equilibration",
+        "step_type": "equilibration",
+        "volume": 10000,
+        "flowrate": 500,
+        "inlet_valve": 1,
+        "outlet_valve": 1,
+        "prime_pump": true,
+        "prime_volume": 1000,
+        "wait_until_complete": true,
+        "description": "Equilibrate SEC column with running buffer"
+      },
+      {
+        "step_name": "Sample Injection",
+        "step_type": "sample_application",
+        "volume": 500,
+        "flowrate": 200,
+        "inlet_valve": 2,
+        "outlet_valve": 2,
+        "prime_pump": true,
+        "prime_volume": 50,
+        "wait_until_complete": true,
+        "description": "Inject concentrated sample for size separation"
+      },
+      {
+        "step_name": "Elution",
+        "step_type": "elution",
+        "volume": 15000,
+        "flowrate": 500,
+        "inlet_valve": 1,
+        "outlet_valve": 2,
+        "prime_pump": false,
+        "prime_volume": null,
+        "wait_until_complete": true,
+        "description": "Elute sample with running buffer - collect fractions"
+      }
+    ]
+  },
+  "anion_exchange": {
+    "process_name": "Anion Exchange Chromatography",
+    "creation_date": "2024-10-12T00:00:00",
+    "steps": [
+      {
+        "step_name": "Equilibration - Low Salt",
+        "step_type": "equilibration",
+        "volume": 4000,
+        "flowrate": 1000,
+        "inlet_valve": 1,
+        "outlet_valve": 1,
+        "prime_pump": true,
+        "prime_volume": 400,
+        "wait_until_complete": true,
+        "description": "Equilibrate with low salt buffer (20mM Tris, pH 8.0)"
+      },
+      {
+        "step_name": "Sample Loading",
+        "step_type": "sample_application",
+        "volume": 3000,
+        "flowrate": 800,
+        "inlet_valve": 2,
+        "outlet_valve": 1,
+        "prime_pump": true,
+        "prime_volume": 300,
+        "wait_until_complete": true,
+        "description": "Load sample in low salt conditions"
+      },
+      {
+        "step_name": "Wash - Low Salt",
+        "step_type": "wash",
+        "volume": 2000,
+        "flowrate": 1200,
+        "inlet_valve": 1,
+        "outlet_valve": 1,
+        "prime_pump": false,
+        "prime_volume": null,
+        "wait_until_complete": true,
+        "description": "Wash with low salt to remove unbound proteins"
+      },
+      {
+        "step_name": "Gradient Elution - 25% High Salt",
+        "step_type": "elution",
+        "volume": 1000,
+        "flowrate": 600,
+        "inlet_valve": 3,
+        "outlet_valve": 2,
+        "prime_pump": true,
+        "prime_volume": 100,
+        "wait_until_complete": true,
+        "description": "Elute with 25% high salt buffer (250mM NaCl)"
+      },
+      {
+        "step_name": "Gradient Elution - 50% High Salt",
+        "step_type": "elution",
+        "volume": 1000,
+        "flowrate": 600,
+        "inlet_valve": 4,
+        "outlet_valve": 2,
+        "prime_pump": false,
+        "prime_volume": null,
+        "wait_until_complete": true,
+        "description": "Elute with 50% high salt buffer (500mM NaCl)"
+      },
+      {
+        "step_name": "Gradient Elution - 100% High Salt",
+        "step_type": "elution",
+        "volume": 1500,
+        "flowrate": 600,
+        "inlet_valve": 5,
+        "outlet_valve": 2,
+        "prime_pump": false,
+        "prime_volume": null,
+        "wait_until_complete": true,
+        "description": "Elute with 100% high salt buffer (1M NaCl)"
+      },
+      {
+        "step_name": "Column Cleaning",
+        "step_type": "cleaning",
+        "volume": 3000,
+        "flowrate": 1500,
+        "inlet_valve": 6,
+        "outlet_valve": 1,
+        "prime_pump": true,
+        "prime_volume": 300,
+        "wait_until_complete": true,
+        "description": "Clean column with 2M NaCl solution"
+      }
+    ]
+  },
+  "quick_test": {
+    "process_name": "Quick Test Process",
+    "creation_date": "2024-10-12T00:00:00",
+    "steps": [
+      {
+        "step_name": "Prime Test",
+        "step_type": "prime",
+        "volume": 1000,
+        "flowrate": 2000,
+        "inlet_valve": 1,
+        "outlet_valve": 1,
+        "prime_pump": true,
+        "prime_volume": 500,
+        "wait_until_complete": true,
+        "description": "Quick prime test at high flow rate"
+      },
+      {
+        "step_name": "Flow Test",
+        "step_type": "wash",
+        "volume": 2000,
+        "flowrate": 1500,
+        "inlet_valve": 2,
+        "outlet_valve": 2,
+        "prime_pump": false,
+        "prime_volume": null,
+        "wait_until_complete": true,
+        "description": "Flow test between different valves"
+      }
+    ]
+  }
+}

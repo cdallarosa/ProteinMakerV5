@@ -1,0 +1,81 @@
+2025-10-10 13:10:12,901 - pump_commands - INFO - Connected to XLP 6000 on COM8
+2025-10-10 13:10:12,902 - pump_commands - INFO - Sent command: /1R
+2025-10-10 13:18:31,276 - pump_commands - INFO - Connected to XLP 6000 on COM8
+2025-10-10 13:18:31,277 - pump_commands - INFO - Sent command: /1ZR
+2025-10-10 13:18:32,502 - pump_commands - INFO - Sent command: /1ZS1gIA3000OA0GR
+2025-10-10 13:20:29,126 - pump_commands - INFO - Connected to XLP 6000 on COM8
+2025-10-10 13:20:29,126 - pump_commands - INFO - Sent command: /1ZR
+2025-10-10 13:20:30,347 - pump_commands - INFO - Sent command: /1ZS1gIA3000OA0GR
+2025-10-10 13:36:42,877 - pump_commands - INFO - Connected to XLP 6000 on COM8
+2025-10-10 13:36:42,880 - pump_commands - INFO - Bytes in buffer: 0
+2025-10-10 13:36:43,882 - pump_commands - INFO - No data in buffer
+2025-10-10 13:36:43,882 - pump_commands - INFO - Sending: '/1R\r' | Hex: 2F 31 52 0D
+2025-10-10 13:36:44,885 - pump_commands - INFO - Bytes in buffer: 0
+2025-10-10 13:36:45,386 - pump_commands - INFO - No data in buffer
+2025-10-10 13:36:45,890 - pump_commands - INFO - Sending: '/1ZR\r' | Hex: 2F 31 5A 52 0D
+2025-10-10 13:36:46,894 - pump_commands - INFO - Bytes in buffer: 0
+2025-10-10 13:36:47,395 - pump_commands - INFO - No data in buffer
+2025-10-10 13:36:47,902 - pump_commands - INFO - Sending: '/1Q\r' | Hex: 2F 31 51 0D
+2025-10-10 13:36:49,409 - pump_commands - WARNING - No response for command: /1Q
+2025-10-10 13:37:10,448 - pump_commands - INFO - Sending: '/1Q\r' | Hex: 2F 31 51 0D
+2025-10-10 13:37:11,958 - pump_commands - WARNING - No response for command: /1Q
+2025-10-10 13:37:59,221 - pump_commands - INFO - Sending: '/1T\r' | Hex: 2F 31 54 0D
+2025-10-10 13:38:00,728 - pump_commands - WARNING - No response for command: /1T
+2025-10-10 13:39:39,807 - pump_commands - INFO - Sending: '/1gIA3000OA0GR\r' | Hex: 2F 31 67 49 41 33 30 30 30 4F 41 30 47 52 0D
+2025-10-10 13:39:41,325 - pump_commands - WARNING - No response for command: /1gIA3000OA0GR
+2025-10-10 13:39:53,503 - pump_commands - INFO - Sending: '/1T\r' | Hex: 2F 31 54 0D
+2025-10-10 13:39:55,017 - pump_commands - WARNING - No response for command: /1T
+2025-10-10 13:40:25,750 - pump_commands - INFO - Sending: '/1ZR\r' | Hex: 2F 31 5A 52 0D
+2025-10-10 13:40:27,261 - pump_commands - WARNING - No response for command: /1ZR
+2025-10-10 13:40:42,442 - pump_commands - INFO - Sending: '/1A3000A0G10R\r' | Hex: 2F 31 41 33 30 30 30 41 30 47 31 30 52 0D
+2025-10-10 13:40:43,952 - pump_commands - WARNING - No response for command: /1A3000A0G10R
+2025-10-10 13:40:51,992 - pump_commands - INFO - Sending: '/1T\r' | Hex: 2F 31 54 0D
+2025-10-10 13:40:53,497 - pump_commands - WARNING - No response for command: /1T
+2025-10-10 13:41:03,961 - pump_commands - INFO - Sending: '/1A6000A0G10R\r' | Hex: 2F 31 41 36 30 30 30 41 30 47 31 30 52 0D
+2025-10-10 13:41:05,477 - pump_commands - WARNING - No response for command: /1A6000A0G10R
+2025-10-10 13:41:17,248 - pump_commands - INFO - Sending: '/1T\r' | Hex: 2F 31 54 0D
+2025-10-10 13:41:18,759 - pump_commands - WARNING - No response for command: /1T
+2025-10-10 14:43:08,890 - pump_commands - INFO - Connected to XLP 6000 on COM8
+2025-10-10 14:47:29,447 - pump_commands - INFO - Connected to XLP 6000 on COM8
+2025-10-10 14:47:52,781 - pump_commands - INFO - Connected to XLP 6000 on COM8
+2025-10-10 14:47:52,781 - pump_commands - INFO - Initializing pump with command: ZR
+2025-10-10 14:47:54,283 - pump_commands - WARNING - Pump initialization failed or no response
+2025-10-10 16:02:36,186 - pump_commands - INFO - Connected to XLP 6000 on COM8
+2025-10-10 16:02:36,186 - pump_commands - INFO - Initializing pump with command: ZR
+2025-10-10 16:02:37,688 - pump_commands - WARNING - Pump initialization failed or no response
+2025-10-10 16:02:47,689 - pump_commands - INFO - Continuous pump cycle: 1000 cycles @ 1000킠/min, inlet=1, outlet=1
+2025-10-10 16:04:18,338 - pump_commands - INFO - Connected to XLP 6000 on COM8
+2025-10-10 16:04:18,339 - pump_commands - INFO - Initializing pump with command: ZR
+2025-10-10 16:04:19,840 - pump_commands - WARNING - Pump initialization failed or no response
+2025-10-10 16:04:29,841 - pump_commands - INFO - Continuous pump cycle: 1000 cycles @ 10000킠/min, inlet=1, outlet=1
+2025-10-11 16:38:09,721 - pump_commands - ERROR - Failed to connect: could not open port 'COM8': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)
+2025-10-11 16:38:09,721 - root - ERROR - Failed to connect to pump. Exiting.
+2025-10-11 16:38:52,337 - pump_commands - INFO - Connected to XLP 6000 on COM9
+2025-10-11 16:38:52,337 - pump_commands - INFO - Initializing pump with command: ZR
+2025-10-11 16:38:53,840 - pump_commands - INFO - Pump initialized successfully
+2025-10-11 16:39:03,840 - pump_commands - INFO - Continuous pump cycle: 1000 cycles @ 10000킠/min, inlet=1, outlet=1
+2025-10-11 16:39:19,162 - pump_commands - INFO - Connected to XLP 6000 on COM9
+2025-10-11 16:39:19,163 - pump_commands - INFO - Initializing pump with command: ZR
+2025-10-11 16:39:20,665 - pump_commands - WARNING - Pump initialization failed or no response
+2025-10-11 16:39:30,666 - pump_commands - INFO - Continuous pump cycle: 1000 cycles @ 10000킠/min, inlet=1, outlet=1
+2025-10-11 17:18:45,662 - pump_commands - INFO - Connected to XLP 6000 on COM9
+2025-10-11 17:18:45,662 - pump_commands - INFO - Initializing pump with command: ZR
+2025-10-11 17:18:47,165 - pump_commands - INFO - Pump initialized successfully
+2025-10-11 17:18:57,166 - pump_commands - INFO - Continuous pump cycle: 1000 cycles @ 10000킠/min, inlet=1, outlet=1
+2025-10-11 17:21:46,251 - pump_commands - INFO - Connected to XLP 6000 on COM9
+2025-10-11 17:21:46,252 - pump_commands - INFO - Initializing pump with command: ZR
+2025-10-11 17:21:47,755 - pump_commands - INFO - Pump initialized successfully
+2025-10-11 17:55:58,308 - pump_commands - INFO - Connected to XLP 6000 on COM9
+2025-10-11 17:55:58,310 - pump_commands - INFO - Initializing pump with command: ZR
+2025-10-11 17:55:59,812 - pump_commands - INFO - Pump initialized successfully
+2025-10-11 18:35:22,665 - pump_commands - INFO - Connected to XLP 6000 on COM9
+2025-10-11 18:35:22,666 - pump_commands - INFO - Initializing pump with command: ZR
+2025-10-11 18:35:24,168 - pump_commands - INFO - Waiting for pump initialization to complete...
+2025-10-11 18:35:24,168 - pump_commands - INFO - Waiting for pump to be ready (timeout=30s, interval=0.5s)
+2025-10-11 18:35:30,707 - pump_commands - INFO - Pump initialized successfully
+2025-10-11 18:46:39,693 - pump_commands - INFO - Connected to XLP 6000 on COM9
+2025-10-11 18:46:39,693 - pump_commands - INFO - Initializing pump with command: ZR
+2025-10-11 18:46:41,195 - pump_commands - INFO - Waiting for pump initialization to complete...
+2025-10-11 18:46:41,195 - pump_commands - INFO - Waiting for pump to be ready (timeout=30s, interval=0.5s)
+2025-10-11 18:46:47,707 - pump_commands - INFO - Pump ready after 6.51s (7 polls)
+2025-10-11 18:46:47,707 - pump_commands - INFO - Pump initialized successfully
