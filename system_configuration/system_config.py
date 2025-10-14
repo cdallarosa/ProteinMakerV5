@@ -1,5 +1,4 @@
 from system_configuration.pump.pump_class import Pump, PumpConfig
-from system_configuration.column import Column, ColumnConfig, ColumnType
 from system_configuration.process import ChromatographyProcess, ProcessLibrary
 import logging
 import time
@@ -9,43 +8,28 @@ logger = logging.getLogger(__name__)
 
 
 class System:
+    # System configuration - MODIFY THIS SECTION TO CONFIGURE YOUR SYSTEM
+    PUMP_COUNT = 3  # Number of pumps in the system
+    PUMP_PORT = "COM12"  # Serial port for pump communication
+    DEFAULT_SYRINGE_SIZE_ML = 5.0  # Default syringe size in mL
 
-    def __init__(self):
-        # Create pump configurations
-        pump1_config = PumpConfig(port="COM12", address=1, syringe_size_ml=5.0)
-        pump2_config = PumpConfig(port="COM12", address=2, syringe_size_ml=5.0)
-        pump3_config = PumpConfig(port="COM12", address=3, syringe_size_ml=5.0)
-
-        # Create pumps
-        self.pump1 = Pump(pump1_config)
-        self.pump2 = Pump(pump2_config)
-        self.pump3 = Pump(pump3_config)
+    def __init__(self, pump_count: Optional[int] = None, pump_port: Optional[str] = None, syringe_size_ml: Optional[float] = None):
+        # Allow override of configuration
+        self.pump_count = pump_count if pump_count is not None else self.PUMP_COUNT
+        self.pump_port = pump_port if pump_port is not None else self.PUMP_PORT
+        self.syringe_size_ml = syringe_size_ml if syringe_size_ml is not None else self.DEFAULT_SYRINGE_SIZE_ML
         
-        # Create columns (one per pump for parallel chromatography)
-        column1_config = ColumnConfig(
-            name="Protein A Column 1",
-            column_type=ColumnType.PROTEIN_A,
-            volume_ml=1.0,
-            max_flow_rate_ml_min=5.0
-        )
-        
-        column2_config = ColumnConfig(
-            name="Protein A Column 2", 
-            column_type=ColumnType.PROTEIN_A,
-            volume_ml=1.0,
-            max_flow_rate_ml_min=5.0
-        )
-        
-        column3_config = ColumnConfig(
-            name="Protein A Column 3",
-            column_type=ColumnType.PROTEIN_A,
-            volume_ml=1.0,
-            max_flow_rate_ml_min=5.0
-        )
-        
-        self.column1 = Column(column1_config)
-        self.column2 = Column(column2_config)
-        self.column3 = Column(column3_config)
+        # Create pumps dynamically based on pump count
+        self.pumps = {}
+        for i in range(1, self.pump_count + 1):
+            pump_config = PumpConfig(
+                port=self.pump_port,
+                address=i,
+                syringe_size_ml=self.syringe_size_ml
+            )
+            self.pumps[f"pump{i}"] = Pump(pump_config)
+            # Also set as attributes for backward compatibility
+            setattr(self, f"pump{i}", self.pumps[f"pump{i}"])
         
         # System state
         self.is_connected = False
@@ -53,13 +37,18 @@ class System:
     
     def connect_all(self) -> bool:
         """Connect to all pumps"""
-        logger.info("Connecting to all pumps...")
+        logger.info(f"Connecting to {self.pump_count} pumps...")
         
-        success1 = self.pump1.connect(verify_device=True)
-        success2 = self.pump2.connect(verify_device=True)
-        success3 = self.pump3.connect(verify_device=True)
+        all_success = True
+        for pump_name, pump in self.pumps.items():
+            success = pump.connect(verify_device=True)
+            if not success:
+                logger.error(f"Failed to connect {pump_name}")
+                all_success = False
+            else:
+                logger.info(f"{pump_name} connected successfully")
         
-        self.is_connected = success1 and success2 and success3
+        self.is_connected = all_success
         
         if self.is_connected:
             logger.info("All pumps connected successfully")
@@ -74,13 +63,18 @@ class System:
             logger.error("Pumps not connected")
             return False
             
-        logger.info("Initializing all pumps...")
+        logger.info(f"Initializing {self.pump_count} pumps...")
         
-        success1 = self.pump1.initialize(wait=True)
-        success2 = self.pump2.initialize(wait=True)
-        success3 = self.pump3.initialize(wait=True)
+        all_success = True
+        for pump_name, pump in self.pumps.items():
+            success = pump.initialize(wait=True)
+            if not success:
+                logger.error(f"Failed to initialize {pump_name}")
+                all_success = False
+            else:
+                logger.info(f"{pump_name} initialized successfully")
         
-        self.is_initialized = success1 and success2 and success3
+        self.is_initialized = all_success
         
         if self.is_initialized:
             logger.info("All pumps initialized successfully")
@@ -108,7 +102,7 @@ class System:
             bool: True if successful
         """
         # Get the specified pump
-        pump = getattr(self, pump_name, None)
+        pump = self.pumps.get(pump_name)
         if not pump:
             logger.error(f"Pump '{pump_name}' not found")
             return False
@@ -142,10 +136,6 @@ class System:
             
             if success:
                 logger.info(f"Process step started for {pump_name}")
-                # Update column tracking
-                column = getattr(self, f"column{pump_name[-1]}", None)
-                if column:
-                    column.process_sample(volume_ml)
             else:
                 logger.error(f"Process step failed for {pump_name}")
                 
@@ -221,8 +211,7 @@ class System:
         while (time.time() - start_time) < timeout:
             all_ready = True
             
-            for pump_name in ["pump1", "pump2", "pump3"]:
-                pump = getattr(self, pump_name)
+            for pump_name, pump in self.pumps.items():
                 if pump.is_connected():
                     if not pump.is_ready():
                         all_ready = False
@@ -242,8 +231,7 @@ class System:
         """Emergency stop all pumps"""
         logger.warning("EMERGENCY STOP - Stopping all pumps")
         
-        for pump_name in ["pump1", "pump2", "pump3"]:
-            pump = getattr(self, pump_name)
+        for pump_name, pump in self.pumps.items():
             if pump.is_connected():
                 pump.stop()
                 logger.info(f"{pump_name} stopped")
@@ -257,8 +245,7 @@ class System:
             'pumps': {}
         }
         
-        for pump_name in ["pump1", "pump2", "pump3"]:
-            pump = getattr(self, pump_name)
+        for pump_name, pump in self.pumps.items():
             if pump.is_connected():
                 pump_status = pump.get_status()
                 is_ready = pump_status.get('is_idle', False)
@@ -288,22 +275,15 @@ class System:
         status = {
             'connected': self.is_connected,
             'initialized': self.is_initialized,
-            'pumps': {},
-            'columns': {}
+            'pumps': {}
         }
         
         # Get pump statuses
-        for pump_name in ['pump1', 'pump2', 'pump3']:
-            pump = getattr(self, pump_name)
+        for pump_name, pump in self.pumps.items():
             if pump.is_connected():
                 status['pumps'][pump_name] = pump.get_status()
             else:
                 status['pumps'][pump_name] = {'state': 'disconnected'}
-        
-        # Get column info
-        status['columns']['column1'] = self.column1.get_info()
-        status['columns']['column2'] = self.column2.get_info()
-        status['columns']['column3'] = self.column3.get_info()
         
         return status
     
@@ -327,7 +307,7 @@ class System:
             return False
         
         # Validate pump names
-        available_pumps = ["pump1", "pump2", "pump3"]
+        available_pumps = list(self.pumps.keys())
         invalid_pumps = [name for name in pump_names if name not in available_pumps]
         if invalid_pumps:
             logger.error(f"Invalid pump names: {invalid_pumps}")
@@ -364,7 +344,7 @@ class System:
         Returns:
             bool: True if process started successfully
         """
-        pump = getattr(self, pump_name, None)
+        pump = self.pumps.get(pump_name)
         if not pump or not pump.is_connected():
             logger.error(f"Pump {pump_name} not available")
             return False
@@ -395,13 +375,6 @@ class System:
                     time.sleep(step.delay_after_sec)
             
             logger.info(f"{pump_name} - Process '{process.config.name}' completed successfully")
-            
-            # Update column tracking
-            column_num = pump_name[-1]  # Extract number from pump name
-            column = getattr(self, f"column{column_num}", None)
-            if column:
-                column.process_sample(process.get_total_volume())
-            
             return True
             
         except Exception as e:
@@ -410,7 +383,7 @@ class System:
     
     def run_all_pumps(self, process: ChromatographyProcess) -> bool:
         """
-        Run a process on all three pumps
+        Run a process on all pumps
         
         Args:
             process: ChromatographyProcess to execute
@@ -418,7 +391,7 @@ class System:
         Returns:
             bool: True if process started on all pumps
         """
-        return self.run_process_on_pumps(process, ["pump1", "pump2", "pump3"])
+        return self.run_process_on_pumps(process, list(self.pumps.keys()))
     
     def run_selected_pumps(self, process: ChromatographyProcess, pump_selection: str) -> bool:
         """
@@ -431,13 +404,14 @@ class System:
         Returns:
             bool: True if process started successfully
         """
+        pump_names = list(self.pumps.keys())
         selections = {
-            "all": ["pump1", "pump2", "pump3"],
-            "half": ["pump1", "pump2"],
-            "first": ["pump1"],
-            "last": ["pump3"],
-            "middle": ["pump2"],
-            "first_and_last": ["pump1", "pump3"]
+            "all": pump_names,
+            "half": pump_names[:len(pump_names)//2 + len(pump_names)%2],
+            "first": [pump_names[0]] if pump_names else [],
+            "last": [pump_names[-1]] if pump_names else [],
+            "middle": [pump_names[len(pump_names)//2]] if pump_names else [],
+            "first_and_last": [pump_names[0], pump_names[-1]] if len(pump_names) >= 2 else pump_names
         }
         
         if pump_selection not in selections:
@@ -467,11 +441,19 @@ class System:
     
     def disconnect_all(self):
         """Disconnect all pumps"""
-        logger.info("Disconnecting all pumps...")
-        self.pump1.disconnect()
-        self.pump2.disconnect()
-        self.pump3.disconnect()
+        logger.info(f"Disconnecting {self.pump_count} pumps...")
+        for pump_name, pump in self.pumps.items():
+            pump.disconnect()
+            logger.info(f"{pump_name} disconnected")
         self.is_connected = False
         self.is_initialized = False
+    
+    def get_pump_names(self) -> List[str]:
+        """Get list of all pump names in the system"""
+        return list(self.pumps.keys())
+    
+    def get_pump(self, pump_name: str) -> Optional[Pump]:
+        """Get a specific pump by name"""
+        return self.pumps.get(pump_name)
 
 
