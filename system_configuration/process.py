@@ -21,7 +21,7 @@ class ProcessType(Enum):
     REGENERATION = "regeneration"
     CUSTOM = "custom"
 
-
+1
 @dataclass
 class ProcessStep:
     """Individual step in a chromatography process"""

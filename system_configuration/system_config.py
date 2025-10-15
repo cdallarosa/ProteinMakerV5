@@ -1,5 +1,5 @@
-from ..system_configuration.pump.pump_class import Pump, PumpConfig
-from ..system_configuration.process import ChromatographyProcess, ProcessLibrary
+from system_configuration.pump.pump_class import Pump, PumpConfig
+from system_configuration.process import ChromatographyProcess, ProcessLibrary
 import logging
 import time
 from typing import List, Dict, Optional
