@@ -622,53 +622,53 @@ class Pump:
                        inlet: int, outlet: int, wait: bool = False) -> bool:
         """
         Execute continuous pumping operation
-        
+
         Args:
             volume_ul: Total volume to pump (microliters)
             flowrate_ul_min: Flow rate (microliters per minute)
             inlet: Inlet valve position (1-10)
             outlet: Outlet valve position (11-12)
             wait: Wait for completion
-            
+
         Returns:
             bool: True if command sent successfully
         """
         # Calculate required steps and rates
         total_steps = self._volume_to_steps(volume_ul)
         steps_per_sec = self._flowrate_to_speed(flowrate_ul_min)
-        
+
         # Determine number of cycles needed
         cycles = total_steps // self.config.max_steps
         remaining = total_steps % self.config.max_steps
-        
+
         logger.info(f"Continuous pump: {volume_ul}µL @ {flowrate_ul_min}µL/min")
         logger.info(f"Cycles: {cycles}, Remaining: {remaining} steps")
-        
+
         # Build command string for continuous operation
         # Format: V[asp_speed]I[valve]A[steps]O[valve]V[disp_speed]A0G[cycles]R
-        
+
         if cycles > 0:
             # Multi-cycle operation
             command = f"V{self.config.default_speed}I{inlet}A{self.config.max_steps}"
             command += f"O{outlet if outlet <= 10 else ''}V{steps_per_sec}A0"
-            
+
             if outlet == 11:
                 command = command.replace(f"O{outlet}", "B")
             elif outlet == 12:
                 command = command.replace(f"O{outlet}", "O")
-            
+
             command += f"G{cycles}R"
-            
+
             response = self._send_command(command)
-            
+
             if not response.success:
                 logger.error(f"Continuous pump failed: {response.error_message}")
                 return False
-            
+
             # Handle remaining volume if any
             if remaining > 0 and wait:
                 self.wait_until_ready(timeout=cycles * 60)  # Rough estimate
-                
+
                 # Pump remaining
                 self.valve_input(inlet)
                 self.aspirate(self._steps_to_volume(remaining), wait=True)
@@ -680,8 +680,41 @@ class Pump:
             self.aspirate(volume_ul, speed=self.config.default_speed, wait=True)
             self.set_valve_position(outlet)
             self.dispense(volume_ul, speed=steps_per_sec, wait=wait)
-        
+
         return True
+
+    def prime(self, inlet: int, outlet: int, volume_ml: float = 0.5,
+              flow_rate_ml_min: float = 2.0, wait: bool = True) -> bool:
+        """
+        Prime a fluid path using continuous_pump
+
+        This method uses the same continuous_pump operation as normal processing,
+        but with default parameters optimized for priming (small volume, faster flow).
+
+        Args:
+            inlet: Inlet valve position (1-10)
+            outlet: Outlet valve position (11-12)
+            volume_ml: Volume to prime in mL (default 0.5 mL)
+            flow_rate_ml_min: Flow rate in mL/min (default 2.0 mL/min for fast priming)
+            wait: Wait for completion (default True)
+
+        Returns:
+            bool: True if successful
+        """
+        logger.info(f"Priming line: inlet {inlet} -> outlet {outlet} ({volume_ml} mL @ {flow_rate_ml_min} mL/min)")
+
+        # Convert to microliters
+        volume_ul = volume_ml * 1000
+        flowrate_ul_min = flow_rate_ml_min * 1000
+
+        # Use continuous_pump for priming
+        return self.continuous_pump(
+            volume_ul=volume_ul,
+            flowrate_ul_min=flowrate_ul_min,
+            inlet=inlet,
+            outlet=outlet,
+            wait=wait
+        )
     
     # ========================================================================
     # SPEED CONTROL

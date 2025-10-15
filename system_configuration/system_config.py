@@ -1,5 +1,5 @@
-from system_configuration.pump.pump_class import Pump, PumpConfig
-from system_configuration.process import ChromatographyProcess, ProcessLibrary
+from ..system_configuration.pump.pump_class import Pump, PumpConfig
+from ..system_configuration.process import ChromatographyProcess, ProcessLibrary
 import logging
 import time
 from typing import List, Dict, Optional
@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 class System:
     # System configuration - MODIFY THIS SECTION TO CONFIGURE YOUR SYSTEM
-    PUMP_COUNT = 3  # Number of pumps in the system
+    PUMP_COUNT = 1  # Number of pumps in the system
     PUMP_PORT = "COM12"  # Serial port for pump communication
     DEFAULT_SYRINGE_SIZE_ML = 5.0  # Default syringe size in mL
 
@@ -114,18 +114,24 @@ class System:
         logger.info(f"Process step: {pump_name} - {volume_ml}mL from inlet {inlet} to outlet {outlet} @ {flow_rate_ml_min}mL/min")
         
         try:
-            # Prime if requested
+            # Prime if requested - now uses the pump's prime() method
             if prime:
                 logger.info(f"Priming {pump_name}...")
-                pump.set_valve_position(inlet)
-                pump.aspirate(500, wait=True)  # Prime with 500µL
-                pump.set_valve_position(outlet)
-                pump.dispense(500, wait=True)
-                pump.home(wait=True)
-            
-            # Execute the main operation
+                success = pump.prime(
+                    inlet=inlet,
+                    outlet=outlet,
+                    volume_ml=0.5,  # Default prime volume
+                    flow_rate_ml_min=2.0,  # Fast priming
+                    wait=True
+                )
+
+                if not success:
+                    logger.error(f"Priming failed for {pump_name}")
+                    return False
+
+            # Execute the main operation - uses continuous_pump
             volume_ul = volume_ml * 1000
-            
+
             success = pump.continuous_pump(
                 volume_ul=volume_ul,
                 flowrate_ul_min=flow_rate_ml_min * 1000,
@@ -133,14 +139,14 @@ class System:
                 outlet=outlet,
                 wait=wait  # Default False for parallel operation
             )
-            
+
             if success:
                 logger.info(f"Process step started for {pump_name}")
             else:
                 logger.error(f"Process step failed for {pump_name}")
-                
+
             return success
-            
+
         except Exception as e:
             logger.error(f"Error during process step: {e}")
             return False
