@@ -1,3 +1,4 @@
+odrive
 dash==2.14.1
 plotly==5.17.0
 pandas==2.3.1
