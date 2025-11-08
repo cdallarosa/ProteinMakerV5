@@ -1,0 +1,567 @@
+/* XLP6000 Pump Control System Styles */
+
+/* Variables */
+:root {
+    --primary-color: #3b82f6;
+    --primary-hover: #2563eb;
+    --secondary-color: #6b7280;
+    --success-color: #16a34a;
+    --success-hover: #15803d;
+    --danger-color: #dc2626;
+    --danger-hover: #b91c1c;
+    --warning-color: #f59e0b;
+    --warning-hover: #d97706;
+    --background-light: #f8fafc;
+    --background-dark: #f1f5f9;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --border-color: #e2e8f0;
+    --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --border-radius: 8px;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+}
+
+/* Global Styles */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    color: var(--text-primary);
+    background-color: var(--background-light);
+}
+
+/* Layout Components */
+.page-title {
+    color: var(--text-primary);
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+    border-bottom: 3px solid var(--primary-color);
+    padding-bottom: var(--spacing-md);
+}
+
+.section-title {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: var(--spacing-sm);
+}
+
+/* Card Components */
+.card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+}
+
+.step-card {
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    margin: var(--spacing-sm);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 100px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.step-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px);
+}
+
+.step-card-active {
+    border-color: var(--primary-color);
+    background-color: #eff6ff;
+}
+
+/* Button Styles */
+.control-button {
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    min-width: 120px;
+}
+
+.control-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.control-button.primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.control-button.primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.control-button.secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.control-button.secondary:hover {
+    background-color: #4b5563;
+}
+
+.control-button.success {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.control-button.success:hover {
+    background-color: var(--success-hover);
+}
+
+.control-button.danger {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.control-button.danger:hover {
+    background-color: var(--danger-hover);
+}
+
+.control-button.warning {
+    background-color: var(--warning-color);
+    color: white;
+}
+
+.control-button.warning:hover {
+    background-color: var(--warning-hover);
+}
+
+/* Valve Button Styles */
+.valve-button {
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: white;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-primary);
+}
+
+.valve-button:hover {
+    border-color: var(--primary-color);
+    background-color: #f0f9ff;
+}
+
+.valve-button-active {
+    border-color: var(--primary-color);
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Form Inputs */
+.form-input {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    transition: border-color 0.2s ease;
+}
+
+.form-input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+/* Button Groups */
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+/* Status Indicators */
+.status-connected {
+    color: var(--success-color);
+    font-weight: 600;
+}
+
+.status-disconnected {
+    color: var(--danger-color);
+    font-weight: 600;
+}
+
+.status-idle {
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+.status-busy {
+    color: var(--warning-color);
+    font-weight: 600;
+}
+
+/* Tables */
+.status-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--border-color);
+    background-color: white;
+}
+
+.status-table th,
+.status-table td {
+    text-align: center;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+}
+
+.status-table th {
+    background-color: var(--background-dark);
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+}
+
+.status-table td {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Method Builder Specific */
+.method-step {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.method-step:hover {
+    box-shadow: var(--card-shadow);
+    border-color: var(--primary-color);
+    background-color: #f0f9ff;
+}
+
+.method-step-selected {
+    background: #eff6ff !important;
+    border: 2px solid var(--primary-color) !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.method-step-selected:hover {
+    background: #dbeafe !important;
+}
+
+.step-info {
+    flex-grow: 1;
+}
+
+.step-controls {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.step-number {
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-right: var(--spacing-sm);
+}
+
+.step-description {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+/* Process Templates */
+.template-card {
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.template-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--card-shadow);
+}
+
+.template-card-active {
+    border-color: var(--primary-color);
+    background-color: #eff6ff;
+}
+
+.template-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.template-description {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card {
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .control-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+        min-width: 100px;
+    }
+    
+    .button-group {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .button-group .control-button {
+        width: 100%;
+    }
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Loading States */
+.loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: var(--spacing-sm);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Connection Status */
+.connection-indicator {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.connection-indicator.connected {
+    background-color: #dcfce7;
+    color: var(--success-color);
+    border: 1px solid #bbf7d0;
+}
+
+.connection-indicator.disconnected {
+    background-color: #fef2f2;
+    color: var(--danger-color);
+    border: 1px solid #fecaca;
+}
+
+.connection-indicator::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.connection-indicator.connected::before {
+    background-color: var(--success-color);
+}
+
+.connection-indicator.disconnected::before {
+    background-color: var(--danger-color);
+}
+
+/* Progress Bars */
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: var(--background-dark);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: var(--spacing-sm) 0;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+/* Dropdown Specific Fixes */
+.Select-menu-outer {
+    z-index: 9999 !important;
+}
+
+.dash-dropdown {
+    position: relative;
+    z-index: 1000;
+}
+
+.dash-dropdown .Select-menu {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Pump Control Specific */
+.pump-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md);
+    background-color: var(--background-dark);
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    text-align: center;
+}
+
+.valve-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: var(--spacing-sm);
+    margin: var(--spacing-md) 0;
+}
+
+/* Method Editor Grid */
+.method-editor-container {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: var(--spacing-lg);
+    align-items: start;
+}
+
+@media (max-width: 1024px) {
+    .method-editor-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Process Runner */
+.process-controls {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+    padding: var(--spacing-lg);
+    background-color: var(--background-light);
+    border-radius: var(--border-radius);
+}
+
+.step-progress {
+    display: flex;
+    align-items: center;
+    margin: var(--spacing-sm) 0;
+}
+
+.step-progress-number {
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-right: var(--spacing-sm);
+}
+
+.step-progress-line {
+    flex-grow: 1;
+    height: 2px;
+    background-color: var(--border-color);
+    margin: 0 var(--spacing-sm);
+}
+
+.step-progress-line.completed {
+    background-color: var(--primary-color);
+}
